@@ -324,18 +324,10 @@ assign USER_OUT = USER_OUT_DRIVE;
 //   Coin A   <- joydb_1[11]|(joydb_1[10]&joydb_1[5])   (coin chord)
 //   Coin B   <- 0            (no second physical coin source on a single pad)
 wire [15:0] joy0 = joydb_1ena ? (OSD_STATUS ? 16'b0 :
-                     {8'b0,
-                      1'b0,                                    // [7] Coin B
-                      joydb_1[11] | (joydb_1[10] & joydb_1[5]),// [6] Coin A
-                      joydb_1[4],                              // [5] Fire / Start A
-                      joydb_1[10],                             // [4] Start B
-                      joydb_1[3:0]})                           // [3:0] U/D/L/R
+                     joydb_1_mapped[6:0])                           // [3:0] U/D/L/R
                    : joy0_USB;
 wire [15:0] joy1 = joydb_2ena ? (OSD_STATUS ? 16'b0 :
-                     {10'b0,
-                      joydb_2[4],                              // [5] Fire (P2)
-                      1'b0,                                    // [4]
-                      joydb_2[3:0]})                           // [3:0] U/D/L/R
+                     joydb_2_mapped[5:0])                           // [3:0] U/D/L/R
                    : joydb_1ena ? joy0_USB : joy1_USB;
 // [MiSTer-DB9-Pro END]
 
